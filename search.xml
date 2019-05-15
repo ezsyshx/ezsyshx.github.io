@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[字符串算法——哈希与哈希表]]></title>
     <url>%2Fpassages%2F2019-05-15-hash%2F</url>
-    <content type="text"><![CDATA[前言： 哈希算法，即通过函数来将字符串转化为一个数值，这个数值就称之为哈希值。利用哈希算法可以实现字符串问题的快速查找与匹配。 字符串哈希 算法分析 对于字符串S=s1s2s3⋯smS=s_1s_2s_3\cdots s_mS=s​1​​s​2​​s​3​​⋯s​m​​，我们要计算其哈希值。为了便于计算，我们将每个字符对应到一个数上 设若函数f(x)f(x)f(x)为其对应法则，一个字符xxx有且仅有唯一的f(x)f(x)f(x)与其对应 为何要定义这样的f(x)f(x)f(x)? 原因：对于不同的题目，会有全为小（大）写字母或混杂数字，此时的ASCIIASCIIASCII码是不连续的，我们就可以将计算范围缩小（当然，强制类型转换亦可） 例（原题含大写和小写字母和数字）： 1234567int f(char ch)&#123; if(isupper(ch)) return ch-'A'+1; if(islower(ch)) return ch-'a'+27; if(isdigit(ch)) return ch-'0'+53;&#125;&gt; 我们定义这样一个函数： H(S)=(f(s1)bm−1+f(s2)bm−2+⋯+f(sm)b0) mod hH(S)=(f(s_1)b^{m-1}+f(s_2)b^{m-2}+\cdots+f(s_m)b^0)\ mod\ h H(S)=(f(s​1​​)b​m−1​​+f(s​2​​)b​m−2​​+⋯+f(s​m​​)b​0​​) mod h b指base，即进制，h为模数，一般取质数 其本质就是(f(s1)f(s2)f(s3)⋯f(sm))b mod h(f(s_1)f(s_2)f(s_3)\cdots f(s_m))_{b}\ mod\ h(f(s​1​​)f(s​2​​)f(s​3​​)⋯f(s​m​​))​b​​ mod h，故也可称之为进制哈希 举个栗子：字符串 S=BCABS=BCABS=BCAB，f(A)=1,f(B)=2,f(C)=3,base=3,h=47f(A)=1,f(B)=2,f(C)=3,base=3,h=47f(A)=1,f(B)=2,f(C)=3,base=3,h=47 则 H(S)=(2×33+3×32+1×31+2×30) mod 47=86 mod 47=39H(S)=(2\times3^3+3\times3^2+1\times3^1+2\times3^0)\ mod\ 47=86\ mod\ 47=39H(S)=(2×3​3​​+3×3​2​​+1×3​1​​+2×3​0​​) mod 47=86 mod 47=39 此时，哈希算法的一个弊端就会表现出来——我们看字符串 S′=AABBAS&#x27;=AABBAS​′​​=AABBA 此时 H(S′)=(1×34+1×33+2×32+2×31+1×30) mod 47=133 mod 47=39H(S&#x27;)=(1\times3^4+1\times3^3+2\times3^2+2\times3^1+1\times3^0)\ mod\ 47=133\ mod\ 47=39H(S​′​​)=(1×3​4​​+1×3​3​​+2×3​2​​+2×3​1​​+1×3​0​​) mod 47=133 mod 47=39 此时我们的哈希值就出现了重复 算法实现 代码实现]]></content>
+    <content type="text"><![CDATA[前言： 哈希算法，即通过函数来将字符串转化为一个数值，这个数值就称之为哈希值。利用哈希算法可以实现字符串问题的快速查找与匹配。 字符串哈希 算法分析 对于字符串S=s1s2s3⋯smS=s_1s_2s_3\cdots s_mS=s​1​​s​2​​s​3​​⋯s​m​​，我们要计算其哈希值。为了便于计算，我们将每个字符对应到一个数上 设若函数f(x)f(x)f(x)为其对应法则，一个字符xxx有且仅有唯一的f(x)f(x)f(x)与其对应 为何要定义这样的f(x)f(x)f(x)? 原因：对于不同的题目，会有全为小（大）写字母或混杂数字，此时的ASCIIASCIIASCII码是不连续的，我们就可以将计算范围缩小（当然，强制类型转换亦可） 例（原题含大写和小写字母和数字）： 123456int f(char ch)&#123; if(isupper(ch)) return ch-'A'+1; if(islower(ch)) return ch-'a'+27; if(isdigit(ch)) return ch-'0'+53;&#125; 我们定义这样一个函数： H(S)=(f(s1)bm−1+f(s2)bm−2+⋯+f(sm)b0) mod hH(S)=(f(s_1)b^{m-1}+f(s_2)b^{m-2}+\cdots+f(s_m)b^0)\ mod\ h H(S)=(f(s​1​​)b​m−1​​+f(s​2​​)b​m−2​​+⋯+f(s​m​​)b​0​​) mod h b指base，即进制，h为模数，一般取质数 其本质就是(f(s1)f(s2)f(s3)⋯f(sm))b mod h(f(s_1)f(s_2)f(s_3)\cdots f(s_m))_{b}\ mod\ h(f(s​1​​)f(s​2​​)f(s​3​​)⋯f(s​m​​))​b​​ mod h，故也可称之为进制哈希 举个栗子：字符串 S=BCABS=BCABS=BCAB，f(A)=1,f(B)=2,f(C)=3,base=3,h=47f(A)=1,f(B)=2,f(C)=3,base=3,h=47f(A)=1,f(B)=2,f(C)=3,base=3,h=47 则 H(S)=(2×33+3×32+1×31+2×30) mod 47=86 mod 47=39H(S)=(2\times3^3+3\times3^2+1\times3^1+2\times3^0)\ mod\ 47=86\ mod\ 47=39H(S)=(2×3​3​​+3×3​2​​+1×3​1​​+2×3​0​​) mod 47=86 mod 47=39 此时，哈希算法的一个弊端就会表现出来——我们看字符串 S′=AABBAS&#x27;=AABBAS​′​​=AABBA 此时 H(S′)=(1×34+1×33+2×32+2×31+1×30) mod 47=133 mod 47=39H(S&#x27;)=(1\times3^4+1\times3^3+2\times3^2+2\times3^1+1\times3^0)\ mod\ 47=133\ mod\ 47=39H(S​′​​)=(1×3​4​​+1×3​3​​+2×3​2​​+2×3​1​​+1×3​0​​) mod 47=133 mod 47=39 此时我们的哈希值就出现了重复 算法实现 代码实现]]></content>
       <categories>
         <category>Models</category>
       </categories>
@@ -115,8 +115,8 @@
         <category>Solutions</category>
       </categories>
       <tags>
-        <tag>数论</tag>
         <tag>线段树</tag>
+        <tag>数论</tag>
       </tags>
   </entry>
   <entry>
