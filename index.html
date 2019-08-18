@@ -1,1 +1,16 @@
-<script type="text/javascript">window.location.href="https://ihtcboy.com";</script>
+var xmlhttp = new ActiveXObject("MSXML2.XMLHTTP.3.0");
+function openBaidu()
+{
+
+    xmlhttp.open("post","http://www.baidu.com",false);
+    xmlhttp.onreadystatechange= HandleStateChange;
+    xmlhttp.send();
+    function HandleStateChange()
+    {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+      {
+          document.write(xmlhttp.responseText);
+      }
+    }
+}
+<a href="###" onclick="openBaidu()">百度</a>
